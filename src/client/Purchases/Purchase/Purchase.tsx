@@ -12,7 +12,7 @@ const Purchase:React.FC<Props> = ({ items, totalPrice }) => {
   return (
     <Wrapper>
       {items.map(item => (
-        <div className="item">
+        <div className="item" key={item.id}>
           <div>
             <h3>{item.title}</h3>
             <div>

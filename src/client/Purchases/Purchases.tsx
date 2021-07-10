@@ -12,11 +12,11 @@ type Props = {
 // Extra features: Making Drawers fit on mobile screens properly (both Purchases and Cart)
 const Purchases: React.FC<Props> = ({ purchases }) => {
   return (
-    <Wrapper>
+    <Wrapper data-cy="purchases">
       <h2>Your Recent Purchases</h2>
       {purchases.length === 0 ? <p>No recent purchases.</p> : null}
       {purchases.map(purchase => (
-        <Purchase items={purchase.items} totalPrice={purchase.total}/>
+        <Purchase key={purchase.id} items={purchase.items} totalPrice={purchase.total}/>
       ))}
     </Wrapper>
   );

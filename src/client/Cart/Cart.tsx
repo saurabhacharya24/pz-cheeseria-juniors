@@ -45,7 +45,7 @@ const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart, clearCart
   };
 
   return (
-    <Wrapper>
+    <Wrapper data-cy="cart">
       <h2>Your Shopping Cart</h2>
       {cartItems.length === 0 ? <p>No items in cart.</p> : null}
       {cartItems.map(item => (
@@ -63,6 +63,7 @@ const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart, clearCart
           color="primary"
           startIcon={<ShoppingCartIcon />}
           onClick={buyItems}
+          data-cy="buy-btn"
         >
           Buy
         </Button>

@@ -97,9 +97,11 @@ const App = () => {
     setCartItems([]);
     setCartOpen(false);
   };
-
+  
   const handleOpenRecentPurchases = () => {
     // Refresh purchases by refetching data
+    // Extra check: to prevent unnecessary refetching, we could check if the user
+    // has just purchased anything, and on that basis we refetch
     refetchPurchases();
     setPurchasesOpen(true);
   };
@@ -127,7 +129,7 @@ const App = () => {
             justify="space-between"
             alignItems="center"
           >
-            <StyledButton onClick={handleOpenRecentPurchases}>
+            <StyledButton onClick={() => handleOpenRecentPurchases()} data-cy="open-purchases">
               <RestoreIcon />
               <Typography variant="subtitle2">
                 Recent Purchases
@@ -138,7 +140,10 @@ const App = () => {
               Welcome to Patient Zero's Cheeseria
             </HeaderTypography>
 
-            <StyledButton onClick={() => setCartOpen(true)}>
+            <StyledButton
+              onClick={() => setCartOpen(true)}
+              data-cy="open-cart"
+            >
               <Badge
                 badgeContent={getTotalItems(cartItems)}
                 color='error'

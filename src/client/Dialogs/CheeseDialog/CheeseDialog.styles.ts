@@ -8,7 +8,10 @@ export const Wrapper = styled.div`
   height: 100%;
 
   button {
-    border-radius: 0 0 20px 20px;
+    width: 60px;
+    margin-left: auto;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
   }
 
   img {

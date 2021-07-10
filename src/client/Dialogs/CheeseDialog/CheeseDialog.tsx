@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 // Types
 import { CartItemType } from '../../App';
@@ -21,6 +22,7 @@ const CheeseDialog: React.FC<Props> = ({ item, open, handleClose }) => {
           <h4>Category: {item.category}</h4>
           <p>{item.description}</p>
         </div>
+        <Button color="secondary" onClick={handleClose}>Close</Button>
       </Wrapper>
     </Dialog>
   )

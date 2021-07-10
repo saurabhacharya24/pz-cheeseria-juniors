@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 // Components
 import Item from './Cart/Item/Item';
 import Cart from './Cart/Cart';
+import CheeseDialog from './Dialogs/CheeseDialog/CheeseDialog';
 import Drawer from '@material-ui/core/Drawer';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
@@ -30,6 +31,8 @@ const getCheeses = async (): Promise<CartItemType[]> =>
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
+  const [cheeseDialogOpen, setCheeseDialogOpen] = useState(false);
+  const [clickedItem, setClickedItem] = useState({} as CartItemType);
   const { data, isLoading, error } = useQuery<CartItemType[]>(
     'cheeses',
     getCheeses
@@ -67,6 +70,15 @@ const App = () => {
         }
       }, [] as CartItemType[])
     );
+  };
+
+  const handleOpenCheeseDialog = (item: CartItemType) => {
+    setClickedItem(item);
+    setCheeseDialogOpen(true);
+  }
+
+  const handleCloseCheeseDialog = () => {
+    setCheeseDialogOpen(false);
   };
 
   if (isLoading) return <LinearProgress />;
@@ -122,10 +134,20 @@ const App = () => {
       <Grid container spacing={3}>
         {data?.map(item => (
           <Grid item key={item.id} xs={12} sm={4}>
-            <Item item={item} handleAddToCart={handleAddToCart} />
+            <Item 
+              item={item}
+              handleAddToCart={handleAddToCart}
+              handleOpenDialog={handleOpenCheeseDialog}
+            />
           </Grid>
         ))}
       </Grid>
+
+      <CheeseDialog
+        open={cheeseDialogOpen}
+        item={clickedItem}
+        handleClose={handleCloseCheeseDialog}
+      />
     </Wrapper>
 
   );

@@ -5,10 +5,7 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   flex-direction: column;
   width: 100%;
-  border: 1px solid lightblue;
-  border-radius: 20px;
   height: 100%;
-  cursor: pointer;
 
   button {
     border-radius: 0 0 20px 20px;
@@ -16,16 +13,16 @@ export const Wrapper = styled.div`
 
   img {
     max-height: 250px;
-    width: 100%;
-    border-radius: 20px 20px 0 0;
+    object-fit: cover;
   }
 
   div {
     font-family: Arial, Helvetica, sans-serif;
+    padding: 1rem;
     height: 100%;
 
-    .text-content {
-      padding: 1rem;
+    p {
+      text-align: justify;
     }
   }
 `;

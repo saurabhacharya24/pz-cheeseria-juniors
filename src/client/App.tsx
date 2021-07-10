@@ -72,6 +72,12 @@ const App = () => {
     );
   };
 
+  // Remove cart items and close cart drawer
+  const clearCart = () => {
+    setCartItems([]);
+    setCartOpen(false);
+  };
+
   const handleOpenCheeseDialog = (item: CartItemType) => {
     setClickedItem(item);
     setCheeseDialogOpen(true);
@@ -128,6 +134,7 @@ const App = () => {
           cartItems={cartItems}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
+          clearCart={clearCart}
         />
       </Drawer>
 

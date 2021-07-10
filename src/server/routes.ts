@@ -37,4 +37,8 @@ router.post('/api/buy', (req, res, next) => {
     }
 });
 
+router.get('/api/purchases', (req, res, next) => {
+    res.json(purchases);
+});
+
 export default router;

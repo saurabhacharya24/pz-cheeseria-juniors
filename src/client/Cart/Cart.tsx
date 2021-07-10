@@ -1,8 +1,11 @@
+// Components
 import CartItem from './CartItem/CartItem';
 import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Wrapper } from './Cart.styles';
+// Types
 import { CartItemType } from '../App';
+// Styles
+import { Wrapper } from './Cart.styles';
 
 type Props = {
   cartItems: CartItemType[];

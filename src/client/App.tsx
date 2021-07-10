@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 // Components
 import Item from './Cart/Item/Item';
 import Cart from './Cart/Cart';
+import Purchases from './Purchases/Purchases';
 import CheeseDialog from './Dialogs/CheeseDialog/CheeseDialog';
 import Drawer from '@material-ui/core/Drawer';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -24,12 +25,21 @@ export type CartItemType = {
   amount: number;
 };
 
+export type PurchaseItemType = {
+  id: number;
+  items: CartItemType[];
+  total: number;
+};
 
 const getCheeses = async (): Promise<CartItemType[]> =>
   await (await fetch(`api/cheeses`)).json();
 
+const getPurchases = async (): Promise<PurchaseItemType[]> =>
+  await (await fetch(`api/purchases`)).json();
+
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
+  const [purchasesOpen, setPurchasesOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
   const [cheeseDialogOpen, setCheeseDialogOpen] = useState(false);
   const [clickedItem, setClickedItem] = useState({} as CartItemType);
@@ -38,6 +48,16 @@ const App = () => {
     getCheeses
   );
   console.log(data);
+
+  const { 
+    data: purchaseData,
+    isLoading: purchasesLoading,
+    error: purchasesError,
+    refetch: refetchPurchases
+  } = useQuery<PurchaseItemType[]>(
+    'purchases',
+    getPurchases
+  );
 
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0);
@@ -78,6 +98,12 @@ const App = () => {
     setCartOpen(false);
   };
 
+  const handleOpenRecentPurchases = () => {
+    // Refresh purchases by refetching data
+    refetchPurchases();
+    setPurchasesOpen(true);
+  };
+
   const handleOpenCheeseDialog = (item: CartItemType) => {
     setClickedItem(item);
     setCheeseDialogOpen(true);
@@ -87,8 +113,8 @@ const App = () => {
     setCheeseDialogOpen(false);
   };
 
-  if (isLoading) return <LinearProgress />;
-  if (error) return <div>Something went wrong ...</div>;
+  if (isLoading || purchasesLoading) return <LinearProgress />;
+  if (error || purchasesError) return <div>Something went wrong ...</div>;
 
   return (
 
@@ -101,7 +127,7 @@ const App = () => {
             justify="space-between"
             alignItems="center"
           >
-            <StyledButton>
+            <StyledButton onClick={handleOpenRecentPurchases}>
               <RestoreIcon />
               <Typography variant="subtitle2">
                 Recent Purchases
@@ -135,6 +161,12 @@ const App = () => {
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
           clearCart={clearCart}
+        />
+      </Drawer>
+
+      <Drawer anchor='left' open={purchasesOpen} onClose={() => setPurchasesOpen(false)}>
+        <Purchases
+          purchases={purchaseData ?? []}
         />
       </Drawer>
 

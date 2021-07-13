@@ -29,7 +29,7 @@ router.post('/api/buy', (req, res, next) => {
 
     // Updating database ie. purchases.json
     try {
-        fs.writeFileSync('./src/server/data/purchases.json', JSON.stringify(purchases));
+        fs.writeFileSync('./src/server/data/purchases.json', JSON.stringify(purchases, null, 2));
         res.status(200).json("Success");
     } catch (error) {
         console.log("could not complete purchase", error);
